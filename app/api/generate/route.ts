@@ -8,7 +8,8 @@ const openai = new OpenAI({
   });
 
 export async function POST(req: Request) {
-    const { prompt } = await req.json();
+
+    const { prompt,n , size } = await req.json();
 
     if (!prompt || prompt.length === 0) {
         return NextResponse.json(
@@ -17,10 +18,24 @@ export async function POST(req: Request) {
         )
     }
 
+    if (!n || n.length === 0) {
+        return NextResponse.json(
+            { message: "You must provied a N (number of image)", statusCode: 400 },
+            { status: 400 }
+        )
+    }
+
+    if (!size || size.length === 0) {
+        return NextResponse.json(
+            { message: "You must provied a image size ", statusCode: 400 },
+            { status: 400 }
+        )
+    }
+
     const aiResponse = await openai.images.generate({
         prompt,
-        n: 1,
-        size: "512x512"
+        n,
+        size
     })
 
     return NextResponse.json({ url: aiResponse.data[0].url }, { status: 200 })
