@@ -16,20 +16,55 @@ export default function Theme({ params }: Props) {
 
   const [shortPrompt, setShortPrompt] = useState("");
   const [fullPrompt, setFullPrompt] = useState("");
+  const [isFullPromptLoaded, setIsFullPromptLoaded] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+  const [isImageLoading, setIsImageLoading] = useState(false);
 
-  const selectedImage = themes.find((theme) => theme.id === parseInt(slug));
+  const selectedImage = themes.find(
+    (theme) => theme.id === parseInt(slug as string)
+  );
 
-  const handleGenerateFullDescription = () => {
+  const handleGenerateFullDescription = async () => {
     setFullPrompt("Generating...");
-    fetch(`/api/akezh`, {
+
+    const paintingTheme = themes.find(
+      (theme) => theme.id === parseInt(slug as string)
+    )?.title;
+
+    const response = await fetch(`/api/full-prompt-message`, {
       method: "POST",
-      body: JSON.stringify({ shortPrompt }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setFullPrompt("Generated!");
-      });
+      body: JSON.stringify({
+        shortPrompt: `The painting theme/genre is ${paintingTheme}. Create the description considering the mentioned genre. ${shortPrompt}`,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (data?.result) {
+      setFullPrompt(data.result);
+      setIsFullPromptLoaded(true);
+    } else {
+      setFullPrompt("Failed to generate prompt");
+      setIsFullPromptLoaded(false);
+    }
+  };
+
+  const handleGenerateImage = async () => {
+    setImageUrl("");
+    setIsImageLoading(true);
+    const response = await fetch(`/api/generate-image`, {
+      method: "POST",
+      body: JSON.stringify({ fullPrompt }),
+    });
+
+    const data = await response.json();
+
+    if (data?.imageUrl) {
+      setImageUrl(data.imageUrl);
+    } else {
+      setImageUrl("");
+    }
+    setIsImageLoading(false);
   };
 
   return (
@@ -79,11 +114,41 @@ export default function Theme({ params }: Props) {
 
             {fullPrompt && (
               <div
-                style={{ width: 500, backgroundColor: "#cccccc", padding: 16 }}
+                style={{
+                  width: 500,
+                  backgroundColor: "#cccccc",
+                  padding: 16,
+                }}
               >
                 {fullPrompt}
               </div>
             )}
+
+            {isFullPromptLoaded && (
+              <Button
+                style={{ textTransform: "capitalize" }}
+                variant="contained"
+                color="primary"
+                onClick={handleGenerateImage}
+              >
+                Generate image
+              </Button>
+            )}
+
+            <div className="mb-24">
+              {imageUrl && (
+                <div className="flex items-center justify-center">
+                  <img
+                    style={{ width: 256, height: 256, objectFit: "cover" }}
+                    className="rounded-lg"
+                    src={imageUrl}
+                    alt="generated"
+                  />
+                </div>
+              )}
+
+              {isImageLoading && <p>Loading...</p>}
+            </div>
           </div>
         </Grid>
       </Grid>
