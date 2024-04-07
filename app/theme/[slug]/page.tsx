@@ -78,12 +78,14 @@ export default function Theme({ params }: Props) {
       </h1>
       <Grid container spacing={12}>
         <Grid item xl={3} lg={3} md={3} sm={4} xs={4}>
-          <div className="flex flex-col gap-[8px] items-center">
+          <div
+            className="flex flex-col gap-[8px] items-center"
+            style={{ position: "relative", width: 300, height: 300 }}
+          >
             <Image
-              style={{ width: 300, objectFit: "cover" }}
               className="rounded-lg"
-              width={300}
-              height={150}
+              layout="fill"
+              objectFit="cover"
               src={selectedImage?.src ?? "/type1.webp"}
               alt="winter"
             />
@@ -140,9 +142,10 @@ export default function Theme({ params }: Props) {
             )}
 
             <div className="mb-24">
-              {isImageLoading ? (
+              {isImageLoading && (
                 <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-12 w-12" />
-              ) : (
+              )}
+              {imageUrl && (
                 <div className="flex items-center justify-center">
                   <Image
                     className="rounded-lg"
