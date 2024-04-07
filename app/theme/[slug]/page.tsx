@@ -52,19 +52,23 @@ export default function Theme({ params }: Props) {
   const handleGenerateImage = async () => {
     setImageUrl("");
     setIsImageLoading(true);
-    const response = await fetch(`/api/generate-image`, {
-      method: "POST",
-      body: JSON.stringify({ fullPrompt }),
-    });
 
-    const data = await response.json();
+    try {
+      const response = await fetch(`/api/generate-image`, {
+        method: "POST",
+        body: JSON.stringify({ fullPrompt }),
+      });
 
-    if (data?.imageUrl) {
-      setImageUrl(data.imageUrl);
-    } else {
-      setImageUrl("");
+      const data = await response.json();
+
+      if (data?.imageUrl) {
+        setImageUrl(data?.imageUrl);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsImageLoading(false);
     }
-    setIsImageLoading(false);
   };
 
   return (
@@ -136,18 +140,19 @@ export default function Theme({ params }: Props) {
             )}
 
             <div className="mb-24">
-              {imageUrl && (
+              {isImageLoading ? (
+                <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-12 w-12" />
+              ) : (
                 <div className="flex items-center justify-center">
-                  <img
-                    style={{ width: 256, height: 256, objectFit: "cover" }}
+                  <Image
                     className="rounded-lg"
+                    width={512}
+                    height={512}
                     src={imageUrl}
                     alt="generated"
                   />
                 </div>
               )}
-
-              {isImageLoading && <p>Loading...</p>}
             </div>
           </div>
         </Grid>

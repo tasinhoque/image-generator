@@ -19,7 +19,7 @@ export default async function handler(
     model: "dall-e-2",
     prompt: fullPrompt,
     n: 1,
-    size: "256x256",
+    size: "512x512",
   });
 
   const imageUrl = image.data[0].url ?? "";

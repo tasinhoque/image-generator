@@ -15,7 +15,7 @@ export default function Home() {
             <div className="flex flex-col gap-[8px] items-center">
               <Link href={`/theme/${theme.id}`} passHref>
                 <Image
-                  style={{ width: 275, height: 175, objectFit: "cover" }}
+                  objectFit="cover"
                   className="rounded-lg"
                   width={275}
                   height={175}
