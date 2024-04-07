@@ -4,7 +4,7 @@ import OpenAI from "openai";
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-const ASSISTANT_ID = "asst_kBVsMCL9yVNcBhjmB1n87tqb";
+const ASSISTANT_ID = "asst_Dk7sL4NWLqkUM6PJH9BGqYo6";
 
 type Data = {
   result: string;
