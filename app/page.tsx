@@ -12,19 +12,20 @@ export default function Home() {
       <Grid container spacing={4}>
         {themes.map((theme) => (
           <Grid key={theme.title} item xl={3} lg={3} md={3} sm={4} xs={6}>
-            <div className="flex flex-col gap-[8px] items-center">
-              <Link href={`/theme/${theme.id}`} passHref>
+            <Link href={`/theme/${theme.id}`} passHref>
+              <div
+                className="flex flex-col gap-[8px] items-center card"
+                style={{ position: "relative", width: 275, height: 175 }}
+              >
                 <Image
+                  layout="fill"
                   objectFit="cover"
-                  className="rounded-lg"
-                  width={275}
-                  height={175}
                   src={theme.src}
-                  alt="winter"
+                  alt="image"
                 />
-              </Link>
-              <p style={{ fontSize: "22px" }}>{theme.title}</p>
-            </div>
+              </div>
+            </Link>
+            <p style={{ fontSize: "22px" }}>{theme.title}</p>
           </Grid>
         ))}
       </Grid>
