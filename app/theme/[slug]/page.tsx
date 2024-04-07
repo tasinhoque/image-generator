@@ -31,7 +31,7 @@ export default function Theme({ params }: Props) {
       (theme) => theme.id === parseInt(slug as string)
     )?.title;
 
-    const response = await fetch(`/api/full-prompt-message`, {
+    const response = await fetch(`/api/generate-prompt`, {
       method: "POST",
       body: JSON.stringify({
         shortPrompt: `The painting theme/genre is ${paintingTheme}. Create the description considering the mentioned genre. ${shortPrompt}`,
