@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import OpenAI from "openai";
+import { TextContentBlock } from "openai/resources/beta/threads/index.mjs";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-const ASSISTANT_ID = "asst_Dk7sL4NWLqkUM6PJH9BGqYo6";
 
 type Data = {
   result: string;
@@ -16,7 +16,9 @@ export default async function handler(
 ) {
   const { shortPrompt } = JSON.parse(req.body);
 
-  const assistant = await openai.beta.assistants.retrieve(ASSISTANT_ID);
+  const assistant = await openai.beta.assistants.retrieve(
+    process.env.ASSISTANT_ID || ""
+  );
   const thread = await openai.beta.threads.create();
   await openai.beta.threads.messages.create(thread.id, {
     role: "user",
@@ -32,7 +34,7 @@ export default async function handler(
   if (run.status === "completed") {
     const messages = await openai.beta.threads.messages.list(run.thread_id);
 
-    result = messages.data[0]?.content?.[0]?.text?.value ?? "";
+    result = (messages.data[0]?.content?.[0] as TextContentBlock).text.value;
   } else {
     console.log(run.status);
   }

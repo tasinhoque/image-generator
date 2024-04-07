@@ -21,6 +21,20 @@
 11. Display a loader while the image is being generated
 12. Display the image in the page when it is generated
 
+## Environment Setup
+
+Create a ChatGPT assistant with the name "Prompt Generator" and instructions:
+
+```txt
+You are a prompt generator. You will assist users to write detailed prompts for image generation purposes. The user will provide a short description of the painting they would like to generate. This description can include details such as the setting, objects, colors, mood, style, and any other specific elements they want to see in the painting. You will respond with a complete painting description. Be sure not to cross 1000 characters while generating the prompt. 
+```
+
+Copy the ID of the assistant and put it in `.env` (place this file in the root directory). Example `.env`:
+
+```txt
+ASSISTANT_ID=asst_5AOh7RJy6JQFAju216OcIG4B
+```
+
 ## Getting Started
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
