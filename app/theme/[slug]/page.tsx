@@ -14,7 +14,6 @@ interface Props {
 export default function Theme({ params }: Props) {
   const { slug } = params;
 
-  const [size, setSize] = useState('256x256');
   const [imageSize, setImageSize] = useState(256);
   const [shortPrompt, setShortPrompt] = useState("");
   const [fullPrompt, setFullPrompt] = useState("");
@@ -29,6 +28,7 @@ export default function Theme({ params }: Props) {
 
   const handleGenerateFullDescription = async () => {
     setFullPrompt("Generating...");
+    setError("");
 
     const paintingTheme = themes.find(
       (theme) => theme.id === parseInt(slug as string)
@@ -55,6 +55,8 @@ export default function Theme({ params }: Props) {
   const handleGenerateImage = async () => {
     setImageUrl("");
     setIsImageLoading(true);
+    setError("");
+    const size = `${imageSize}x${imageSize}`;
 
     try {
       const response = await fetch(`/api/generate-image`, {
@@ -68,7 +70,9 @@ export default function Theme({ params }: Props) {
         setImageUrl(data?.imageUrl);
       }
     } catch (error) {
-      setError(error.message);
+      setError(
+        "Your prompt may contain text that is not allowed by our safety system."
+      );
     } finally {
       setIsImageLoading(false);
     }
@@ -159,7 +163,7 @@ export default function Theme({ params }: Props) {
 
             <div className="mb-24">
               {error ? (
-                <p className="text-red-500">{"Ups! Something went wrong: "}</p>
+                <p className="text-red-500">{error}</p>
               ) : (
                 <>
                   {isImageLoading && (

@@ -1,11 +1,11 @@
 # Image Generator
 
-## Team 31:
+## Team 31
+
 Akezh - KhYtRG
 Tasin Hoque - YuGfro
 Ksenia - TK25ZS
 Meryem Afife — rgwO9w
-InaamGPT - INq0jL
 
 ## Specification
 
@@ -36,16 +36,11 @@ Create a ChatGPT assistant with the name "Prompt Generator" and instructions:
 You are a prompt generator. You will assist users to write detailed prompts for image generation purposes. The user will provide a short description of the painting they would like to generate. This description can include details such as the setting, objects, colors, mood, style, and any other specific elements they want to see in the painting. You will respond with a complete painting description. Your message must be less than 1000 characters. 
 ```
 
-Copy the ID of the assistant and put it in `.env` (place this file in the root directory). Example `.env`:
+Copy the OpenAI API key and ID of the assistant and put it in `.env` (place this file in the root directory). Example `.env`:
 
 ```txt
 ASSISTANT_ID=asst_5AOh7RJy6JQFAju216OcIG4B
-```
-
-Fill your API key in `.env`:
-
-```txt
-OPENAI_API_KEY=
+OPENAI_API_KEY=<Your-ID>
 ```
 
 ## Getting Started
