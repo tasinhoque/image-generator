@@ -2,10 +2,10 @@
 
 ## Team 31
 
-Akezh - KhYtRG
-Tasin Hoque - YuGfro
-Ksenia - TK25ZS
-Meryem Afife — rgwO9w
+- Akezh: KhYtRG
+- Tasin Hoque: YuGfro
+- Ksenia: TK25ZS
+- Meryem Afife: rgwO9w
 
 ## Specification
 
