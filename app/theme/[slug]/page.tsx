@@ -1,7 +1,7 @@
 "use client";
 
 import { themes } from "@/app/constants";
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField, Select, MenuItem } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -14,11 +14,13 @@ interface Props {
 export default function Theme({ params }: Props) {
   const { slug } = params;
 
+  const [imageSize, setImageSize] = useState(256);
   const [shortPrompt, setShortPrompt] = useState("");
   const [fullPrompt, setFullPrompt] = useState("");
   const [isFullPromptLoaded, setIsFullPromptLoaded] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [isImageLoading, setIsImageLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const selectedImage = themes.find(
     (theme) => theme.id === parseInt(slug as string)
@@ -26,6 +28,7 @@ export default function Theme({ params }: Props) {
 
   const handleGenerateFullDescription = async () => {
     setFullPrompt("Generating...");
+    setError("");
 
     const paintingTheme = themes.find(
       (theme) => theme.id === parseInt(slug as string)
@@ -52,11 +55,13 @@ export default function Theme({ params }: Props) {
   const handleGenerateImage = async () => {
     setImageUrl("");
     setIsImageLoading(true);
+    setError("");
+    const size = `${imageSize}x${imageSize}`;
 
     try {
       const response = await fetch(`/api/generate-image`, {
         method: "POST",
-        body: JSON.stringify({ fullPrompt }),
+        body: JSON.stringify({ fullPrompt, size }),
       });
 
       const data = await response.json();
@@ -65,7 +70,9 @@ export default function Theme({ params }: Props) {
         setImageUrl(data?.imageUrl);
       }
     } catch (error) {
-      console.log(error);
+      setError(
+        "Your prompt may contain text that is not allowed by our safety system."
+      );
     } finally {
       setIsImageLoading(false);
     }
@@ -141,20 +148,39 @@ export default function Theme({ params }: Props) {
               </Button>
             )}
 
+            {isFullPromptLoaded && (
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={imageSize || 256}
+                onChange={(e) => setImageSize(Number(e.target.value))}
+              >
+                <MenuItem value={256}>256x256</MenuItem>
+                <MenuItem value={512}>512x512</MenuItem>
+                <MenuItem value={1024}>1024x1024</MenuItem>
+              </Select>
+            )}
+
             <div className="mb-24">
-              {isImageLoading && (
-                <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-12 w-12" />
-              )}
-              {imageUrl && (
-                <div className="flex items-center justify-center">
-                  <Image
-                    className="rounded-lg"
-                    width={512}
-                    height={512}
-                    src={imageUrl}
-                    alt="generated"
-                  />
-                </div>
+              {error ? (
+                <p className="text-red-500">{error}</p>
+              ) : (
+                <>
+                  {isImageLoading && (
+                    <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-12 w-12" />
+                  )}
+                  {imageUrl && (
+                    <div className="flex items-center justify-center">
+                      <Image
+                        className="rounded-lg"
+                        width={imageSize}
+                        height={imageSize}
+                        src={imageUrl}
+                        alt="generated"
+                      />
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </div>

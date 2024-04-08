@@ -1,5 +1,12 @@
 # Image Generator
 
+## Team 31
+
+Akezh - KhYtRG
+Tasin Hoque - YuGfro
+Ksenia - TK25ZS
+Meryem Afife — rgwO9w
+
 ## Specification
 
 1. Create a new application from scratch using NextJS
@@ -26,20 +33,27 @@
 Create a ChatGPT assistant with the name "Prompt Generator" and instructions:
 
 ```txt
-You are a prompt generator. You will assist users to write detailed prompts for image generation purposes. The user will provide a short description of the painting they would like to generate. This description can include details such as the setting, objects, colors, mood, style, and any other specific elements they want to see in the painting. You will respond with a complete painting description. Be sure not to cross 1000 characters while generating the prompt. 
+You are a prompt generator. You will assist users to write detailed prompts for image generation purposes. The user will provide a short description of the painting they would like to generate. This description can include details such as the setting, objects, colors, mood, style, and any other specific elements they want to see in the painting. You will respond with a complete painting description. Your message must be less than 1000 characters. 
 ```
 
-Copy the ID of the assistant and put it in `.env` (place this file in the root directory). Example `.env`:
+Copy the OpenAI API key and ID of the assistant and put it in `.env` (place this file in the root directory). Example `.env`:
 
 ```txt
 ASSISTANT_ID=asst_5AOh7RJy6JQFAju216OcIG4B
+OPENAI_API_KEY=<Your-ID>
 ```
 
 ## Getting Started
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-First, run the development server:
+First, install all project dependancies:
+
+```bash
+npm install
+```
+
+And run the development server:
 
 ```bash
 npm run dev

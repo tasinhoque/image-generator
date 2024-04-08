@@ -7,6 +7,7 @@ const openai = new OpenAI({
 
 type Data = {
   imageUrl: string;
+  error?: string;
 };
 
 export default async function handler(
@@ -14,12 +15,13 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const { fullPrompt } = JSON.parse(req.body);
+  const { size } = JSON.parse(req.body);
 
   const image = await openai.images.generate({
     model: "dall-e-2",
     prompt: fullPrompt,
     n: 1,
-    size: "512x512",
+    size,
   });
 
   const imageUrl = image.data[0].url ?? "";
