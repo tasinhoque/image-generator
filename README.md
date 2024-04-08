@@ -1,5 +1,12 @@
 # Image Generator
 
+## Team 31
+
+- Akezh: KhYtRG
+- Tasin Hoque: YuGfro
+- Ksenia: TK25ZS
+- Meryem Afife: rgwO9w
+
 ## Specification
 
 1. Create a new application from scratch using NextJS
@@ -21,11 +28,32 @@
 11. Display a loader while the image is being generated
 12. Display the image in the page when it is generated
 
+## Environment Setup
+
+Create a ChatGPT assistant with the name "Prompt Generator" and instructions:
+
+```txt
+You are a prompt generator. You will assist users to write detailed prompts for image generation purposes. The user will provide a short description of the painting they would like to generate. This description can include details such as the setting, objects, colors, mood, style, and any other specific elements they want to see in the painting. You will respond with a complete painting description. Your message must be less than 1000 characters. 
+```
+
+Copy the OpenAI API key and ID of the assistant and put it in `.env` (place this file in the root directory). Example `.env`:
+
+```txt
+ASSISTANT_ID=asst_5AOh7RJy6JQFAju216OcIG4B
+OPENAI_API_KEY=<Your-Key>
+```
+
 ## Getting Started
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-First, run the development server:
+First, install all project dependancies:
+
+```bash
+npm install
+```
+
+And run the development server:
 
 ```bash
 npm run dev
@@ -36,3 +64,17 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+## Features
+
+Layouts
+
+![Spinner](assets/home.png)
+
+Image Loading
+
+![Spinner](assets/spinner.png)
+
+Generated Image
+
+![Spinner](assets/generated.png)
