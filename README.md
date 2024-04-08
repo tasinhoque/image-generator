@@ -40,7 +40,7 @@ Copy the OpenAI API key and ID of the assistant and put it in `.env` (place this
 
 ```txt
 ASSISTANT_ID=asst_5AOh7RJy6JQFAju216OcIG4B
-OPENAI_API_KEY=<Your-ID>
+OPENAI_API_KEY=<Your-Key>
 ```
 
 ## Getting Started
